@@ -1,11 +1,14 @@
 package com.quicklookbusy.twending;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -50,12 +53,20 @@ public class TwendingService extends Service {
 
 	public class TwendsCallback {
 
-		public void doOnResult(ArrayList<String> topics) {
+		public void doOnResult(ArrayList<String> topics) throws IOException {
 			// Update ListView
 			log("Got requet data");
+			
+			SharedPreferences prefs = getSharedPreferences("TWENDING", 0);
+			Editor settingsEditor = prefs.edit();
+			for(int i=0; i<topics.size(); i++) {
+				settingsEditor.putString("topic" + i, topics.get(i));
+			}
+			settingsEditor.commit();
+			
 			Intent svcIntent = new Intent(getApplicationContext(),
 					TwendingViewService.class);
-			svcIntent.putStringArrayListExtra("topics", topics);
+			//svcIntent.putStringArrayListExtra("topics", topics);
 			remoteViews.setRemoteAdapter(R.id.topics, svcIntent);
 
 			// Push update for this widget to the home screen

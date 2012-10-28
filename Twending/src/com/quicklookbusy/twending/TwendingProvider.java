@@ -29,7 +29,7 @@ public class TwendingProvider extends AppWidgetProvider {
 			service = PendingIntent.getService(context, 0,  intent,  PendingIntent.FLAG_CANCEL_CURRENT);
 		}
 		
-		int minutes = 1;
+		int minutes = 30;
 		am.setRepeating(AlarmManager.RTC,  time.getTime().getTime(),  minutes*60*1000,  service);
 	}
 }
