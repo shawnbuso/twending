@@ -38,7 +38,11 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 
 	@Override
 	public RemoteViews getViewAt(int position) {
-		TwendingService.log("Getting view at position" + position);
+		//TwendingService.log("Getting view at position" + position);
+		
+		if(position == 0) {
+			TwendingService.log("Position 0 = " + topics.get(position));
+		}
 		
 		RemoteViews row = new RemoteViews(context.getPackageName(), R.layout.row);
 
@@ -52,7 +56,7 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 				.getActivity(context, 0, intent, 0);
 		row.setOnClickPendingIntent(android.R.id.text1, pendingIntent);
 
-		TwendingService.log("Returning view at position" + position);
+		//TwendingService.log("Returning view at position" + position);
 		return (row);
 	}
 

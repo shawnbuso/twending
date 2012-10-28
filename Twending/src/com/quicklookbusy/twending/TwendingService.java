@@ -13,6 +13,8 @@ import android.widget.RemoteViews;
 public class TwendingService extends Service {
 
 	RemoteViews remoteViews = null;
+	
+	int[] appWidgetIDs;
 
 	public static String LOG_TAG = "twending";
 
@@ -23,6 +25,8 @@ public class TwendingService extends Service {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		appWidgetIDs = intent.getIntArrayExtra("appWidgetIDs");
+		
 		buildUpdate();
 
 		return super.onStartCommand(intent, flags, startId);
@@ -55,11 +59,12 @@ public class TwendingService extends Service {
 			remoteViews.setRemoteAdapter(R.id.topics, svcIntent);
 
 			// Push update for this widget to the home screen
-			log("Updating widget");
+			log("Updating widget, position 0 = " + topics.get(0));
 			ComponentName thisWidget = new ComponentName(TwendingService.this,
 					TwendingProvider.class);
 			AppWidgetManager manager = AppWidgetManager
 					.getInstance(TwendingService.this);
+			manager.notifyAppWidgetViewDataChanged(appWidgetIDs, R.id.topics);
 			manager.updateAppWidget(thisWidget, remoteViews);
 			log("Updated widget");
 		}

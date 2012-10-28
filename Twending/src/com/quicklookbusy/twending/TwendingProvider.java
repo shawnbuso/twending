@@ -23,6 +23,7 @@ public class TwendingProvider extends AppWidgetProvider {
 		time.set(Calendar.MILLISECOND, 0);
 		
 		final Intent intent = new Intent(context, TwendingService.class);
+		intent.putExtra("appWidgetIDs", appWidgetIDs);
 		
 		if(service == null) {
 			service = PendingIntent.getService(context, 0,  intent,  PendingIntent.FLAG_CANCEL_CURRENT);
