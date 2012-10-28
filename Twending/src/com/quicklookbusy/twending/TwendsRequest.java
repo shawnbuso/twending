@@ -1,5 +1,7 @@
 package com.quicklookbusy.twending;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +41,10 @@ public class TwendsRequest extends Thread {
 					mostRecent = trends;
 				}
 			}
+			
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			Calendar cal = Calendar.getInstance();			
+			topics.add(dateFormat.format(cal.getTime()));
 			
 			for(int i=0; i<mostRecent.getTrends().length; i++) {
 				topics.add(mostRecent.getTrends()[i].getName());
