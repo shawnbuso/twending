@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.quicklookbusy.twending.TwendingProvider.TwendsCallback;
+import com.quicklookbusy.twending.TwendingService.TwendsCallback;
 
 import twitter4j.ResponseList;
 import twitter4j.Trends;

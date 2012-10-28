@@ -16,6 +16,7 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 	ArrayList<String> topics;
 
 	public TwendingViewsFactory(Context context, Intent intent) {
+		TwendingService.log("In factory constructor");
 		this.context = context;
 		this.topics = intent.getStringArrayListExtra("topics");
 	}
@@ -37,6 +38,8 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 
 	@Override
 	public RemoteViews getViewAt(int position) {
+		TwendingService.log("Getting view at position" + position);
+		
 		RemoteViews row = new RemoteViews(context.getPackageName(), R.layout.row);
 
 		row.setTextViewText(android.R.id.text1, topics.get(position));
@@ -49,6 +52,7 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 				.getActivity(context, 0, intent, 0);
 		row.setOnClickPendingIntent(android.R.id.text1, pendingIntent);
 
+		TwendingService.log("Returning view at position" + position);
 		return (row);
 	}
 
