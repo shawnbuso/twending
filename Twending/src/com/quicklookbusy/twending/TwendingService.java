@@ -16,6 +16,8 @@ import android.widget.RemoteViews;
 public class TwendingService extends Service {
 
 	RemoteViews remoteViews = null;
+	SharedPreferences prefs = null;
+	Editor settingsEditor = null;
 	
 	int[] appWidgetIDs;
 
@@ -24,6 +26,8 @@ public class TwendingService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		prefs = getSharedPreferences("TWENDING", 0);
+		settingsEditor = prefs.edit();
 	}
 
 	@Override
@@ -57,8 +61,8 @@ public class TwendingService extends Service {
 			// Update ListView
 			log("Got requet data");
 			
-			SharedPreferences prefs = getSharedPreferences("TWENDING", 0);
-			Editor settingsEditor = prefs.edit();
+			settingsEditor.putInt("numTopics", topics.size());
+			
 			for(int i=0; i<topics.size(); i++) {
 				settingsEditor.putString("topic" + i, topics.get(i));
 			}
@@ -70,7 +74,7 @@ public class TwendingService extends Service {
 			remoteViews.setRemoteAdapter(R.id.topics, svcIntent);
 
 			// Push update for this widget to the home screen
-			log("Updating widget, position 0 = " + topics.get(0));
+			//log("Updating widget, position 0 = " + topics.get(0));
 			ComponentName thisWidget = new ComponentName(TwendingService.this,
 					TwendingProvider.class);
 			AppWidgetManager manager = AppWidgetManager

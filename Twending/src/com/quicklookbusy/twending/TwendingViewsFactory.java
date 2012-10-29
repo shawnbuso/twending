@@ -14,17 +14,19 @@ import android.widget.RemoteViewsService.RemoteViewsFactory;
 public class TwendingViewsFactory implements RemoteViewsFactory {
 
 	Context context;
+	SharedPreferences prefs = null;
 	//ArrayList<String> topics;
 
 	public TwendingViewsFactory(Context context, Intent intent) {
 		TwendingService.log("In factory constructor");
 		this.context = context;
+		prefs = context.getSharedPreferences("TWENDING", 0);
 		//this.topics = intent.getStringArrayListExtra("topics");
 	}
 
 	@Override
 	public int getCount() {
-		return 20;
+		return prefs.getInt("numTopics", 0);
 	}
 
 	@Override
@@ -42,15 +44,14 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 		//TwendingService.log("Getting view at position" + position);
 		
 		ArrayList<String> topics = new ArrayList<String>();
-		SharedPreferences prefs = context.getSharedPreferences("TWENDING", 0);
-		for(int i=0; i<20; i++) {
+		for(int i=0; i<getCount(); i++) {
 			topics.add(prefs.getString("topic" + i, ""));
 		}
 		
 		
-		if(position == 0) {
+		/*if(position == 0) {
 			TwendingService.log("Position 0 = " + topics.get(position));
-		}
+		}*/
 		
 		RemoteViews row = new RemoteViews(context.getPackageName(), R.layout.row);
 

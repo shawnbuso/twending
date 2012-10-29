@@ -5,11 +5,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
 import com.quicklookbusy.twending.TwendingService.TwendsCallback;
 
-import twitter4j.ResponseList;
 import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -27,9 +24,10 @@ public class TwendsRequest extends Thread {
 		//Get list of trending topics from twitter
 		ArrayList<String> topics = new ArrayList<String>();
 		Twitter twitter = new TwitterFactory().getInstance();
-		ResponseList<Trends> dailyTrends;
+		//ResponseList<Trends> dailyTrends;
+		Trends usTrends;
 		try {
-			dailyTrends = twitter.getDailyTrends();
+			/*dailyTrends = twitter.getLocationTrends(23424977);
 			//Figure out most recent
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(0,  0, 0);
@@ -41,15 +39,21 @@ public class TwendsRequest extends Thread {
 					maxDate = asOf;
 					mostRecent = trends;
 				}
-			}
+			}*/
+			
+			usTrends = twitter.getLocationTrends(23424977);
 			
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			Calendar cal = Calendar.getInstance();			
 			topics.add(dateFormat.format(cal.getTime()));
 			
-			for(int i=0; i<mostRecent.getTrends().length; i++) {
-				topics.add(mostRecent.getTrends()[i].getName());
+			for(int i=0; i<usTrends.getTrends().length; i++) {
+				topics.add(usTrends.getTrends()[i].getName());
 			}
+			
+			/*for(int i=0; i<mostRecent.getTrends().length; i++) {
+				topics.add(mostRecent.getTrends()[i].getName());
+			}*/
 			
 		} catch (TwitterException e) {
 			e.printStackTrace();
