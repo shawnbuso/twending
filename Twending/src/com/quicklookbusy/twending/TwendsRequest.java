@@ -1,12 +1,13 @@
 package com.quicklookbusy.twending;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.quicklookbusy.twending.TwendingProvider.TwendsCallback;
+import com.quicklookbusy.twending.TwendingService.TwendsCallback;
 
 import twitter4j.ResponseList;
 import twitter4j.Trends;
@@ -54,6 +55,10 @@ public class TwendsRequest extends Thread {
 			e.printStackTrace();
 		}
 		
-		callback.doOnResult(topics);
+		try {
+			callback.doOnResult(topics);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
