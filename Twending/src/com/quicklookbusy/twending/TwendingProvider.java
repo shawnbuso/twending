@@ -62,9 +62,8 @@ public class TwendingProvider extends AppWidgetProvider {
 	/**
 	 * Un-registers the widget with the AlarmManager
 	 * @param context Context of the app
-	 * @param appWidgetIds IDs for widgets that need to be updated
 	 */
-	public void onDeleted(Context context, int[] appWidgetIds) {
+	public void onDisabled(Context context) {
 		final AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		if (service != null) {

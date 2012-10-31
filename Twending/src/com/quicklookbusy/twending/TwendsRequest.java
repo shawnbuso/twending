@@ -57,7 +57,7 @@ public class TwendsRequest extends Thread {
 
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
-			topics.add(dateFormat.format(cal.getTime()));
+			topics.add("Last updated at " + dateFormat.format(cal.getTime()));
 
 		} catch (TwitterException e) {
 			e.printStackTrace();

@@ -93,9 +93,15 @@ public class TwendingViewsFactory implements RemoteViewsFactory {
 		row.setTextColor(android.R.id.text1, Color.BLACK);
 
 		if (!topics.get(position).equals("Error: could not contact twitter")) {
-			Intent intent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("https://twitter.com/search?q="
-							+ topics.get(position).replace("#", "%23")));
+			TwendingService.log("Current trend: " + topics.get(position)
+					+ ", and url = " + "https://twitter.com/search?q="
+					+ topics.get(position).replace("#", "%23"));
+			Intent intent = new Intent();
+			if (!topics.get(position).contains("Last updated")) {
+				intent = new Intent(Intent.ACTION_VIEW,
+						Uri.parse("https://twitter.com/search?q="
+								+ topics.get(position).replace("#", "%23")));
+			}
 			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
 					intent, 0);
 			row.setOnClickPendingIntent(android.R.id.text1, pendingIntent);
