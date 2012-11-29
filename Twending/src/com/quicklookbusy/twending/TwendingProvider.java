@@ -27,6 +27,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 /**
  * Implements the provider for the twending widget
@@ -48,6 +49,8 @@ public class TwendingProvider extends AppWidgetProvider {
 	 */
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIDs) {
+		TwendingService.log("Updating");
+
 		final AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 
@@ -64,7 +67,9 @@ public class TwendingProvider extends AppWidgetProvider {
 					PendingIntent.FLAG_CANCEL_CURRENT);
 		}
 
-		int minutes = 30;
+		SharedPreferences settings = context
+				.getSharedPreferences("TWENDING", 0);
+		int minutes = settings.getInt("frequency", 60);
 		am.setRepeating(AlarmManager.RTC, time.getTime().getTime(),
 				minutes * 60 * 1000, service);
 	}

@@ -5,6 +5,7 @@
     android:minHeight="110dp"
     android:minWidth="110dp"
     android:updatePeriodMillis="1800000"
+    android:configure="com.quicklookbusy.twending.TwendingSettings" 
     android:resizeMode="horizontal|vertical" >
 
 </appwidget-provider> 
