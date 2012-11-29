@@ -19,7 +19,10 @@
 
 package com.quicklookbusy.twending;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -125,15 +128,20 @@ public class TwendingService extends Service {
 		public void doOnResult(ArrayList<String> topics) {
 			log("Got requet data");
 
-			if (topics.size() == 0) {
-				topics.add("Error: could not contact twitter");
+			if (topics.size() == 0) { // Update failed, grab old topics
+				log("No new topics");
+				for (int i = 0; i < prefs.getInt("numTopics", 0); i++) {
+					topics.add(prefs.getString("topic" + i, ""));
+				}
+				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				Calendar cal = Calendar.getInstance();
+				topics.add(dateFormat.format(cal.getTime()) + " update failed.");
 			}
-
-			settingsEditor.putInt("numTopics", topics.size());
 
 			for (int i = 0; i < topics.size(); i++) {
 				settingsEditor.putString("topic" + i, topics.get(i));
 			}
+			settingsEditor.putInt("numTopics", topics.size());
 			settingsEditor.commit();
 
 			Intent svcIntent = new Intent(getApplicationContext(),
