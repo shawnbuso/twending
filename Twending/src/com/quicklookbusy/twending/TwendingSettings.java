@@ -34,7 +34,23 @@ public class TwendingSettings extends Activity {
 			Intent resultValue = new Intent();
 			resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 					mAppWidgetId);
+
+			Intent intent = new Intent(TwendingSettings.this,
+					TwendingProvider.class);
+			intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+
+			// Use an array and EXTRA_APPWIDGET_IDS instead of
+			// AppWidgetManager.EXTRA_APPWIDGET_ID,
+			// since it seems the onUpdate() is only fired on that:
+			int[] ids = { mAppWidgetId };
+			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+			sendBroadcast(intent);
+
 			setResult(RESULT_OK, resultValue);
+
+			editor.putBoolean("configured", true);
+			editor.commit();
+
 			finish();
 		}
 	}
@@ -43,10 +59,15 @@ public class TwendingSettings extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setResult(RESULT_CANCELED);
+
 		setContentView(R.layout.main);
 
 		settings = getSharedPreferences("TWENDING", 0);
 		editor = settings.edit();
+
+		editor.putBoolean("configured", false);
+		editor.commit();
 
 		freqField = (EditText) findViewById(R.id.frequencyField);
 		freqField.setText("" + settings.getInt("frequency", 60));
