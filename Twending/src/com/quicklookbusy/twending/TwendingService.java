@@ -133,6 +133,13 @@ public class TwendingService extends Service {
 				for (int i = 0; i < prefs.getInt("numTopics", 0); i++) {
 					topics.add(prefs.getString("topic" + i, ""));
 				}
+
+				// Remove 'update failed' log at the end of the list (if there
+				// is one)
+				if (topics.get(topics.size() - 1).contains("update failed")) {
+					topics.remove(topics.size() - 1);
+				}
+
 				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 				topics.add(dateFormat.format(cal.getTime()) + " update failed.");
