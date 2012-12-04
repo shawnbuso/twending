@@ -80,7 +80,7 @@ public class TwendingService extends Service {
 
 		buildUpdate();
 
-		return super.onStartCommand(intent, flags, startId);
+		return START_REDELIVER_INTENT;
 	}
 
 	/**
