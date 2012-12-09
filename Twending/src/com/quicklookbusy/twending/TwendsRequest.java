@@ -66,7 +66,7 @@ public class TwendsRequest extends Thread {
 				topics.add(usTrends.getTrends()[i].getName());
 			}
 
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss d MMM");
 			Calendar cal = Calendar.getInstance();
 			topics.add("Last updated at " + dateFormat.format(cal.getTime()));
 
