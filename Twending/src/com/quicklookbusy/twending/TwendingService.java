@@ -140,7 +140,7 @@ public class TwendingService extends Service {
 					topics.remove(topics.size() - 1);
 				}
 
-				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss d MMM");
 				Calendar cal = Calendar.getInstance();
 				topics.add(dateFormat.format(cal.getTime()) + " update failed.");
 			}
